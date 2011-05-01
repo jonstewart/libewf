@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libewf
+Description: Library to support the Expert Witness Compression Format (EWF)
+Version: @VERSION@
+Libs: -L${libdir} -lewf
+Libs.private: -lz @libewf_pc_libs_private_libuna@ @libewf_pc_libs_private_libbfio@
+Cflags: -I${includedir}
+

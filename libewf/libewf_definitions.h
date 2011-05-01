@@ -1,0 +1,166 @@
+/*
+ * The internal definitions
+ *
+ * Copyright (c) 2008-2009, Joachim Metz <forensics@hoffmannbv.nl>,
+ * Hoffmann Investigations.
+ *
+ * Refer to AUTHORS for acknowledgements.
+ *
+ * This software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this software.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#if !defined( _LIBEWF_INTERNAL_DEFINITIONS_H )
+#define _LIBEWF_INTERNAL_DEFINITIONS_H
+
+#include <common.h>
+#include <byte_stream.h>
+
+#define LIBEWF_ENDIAN_BIG			_BYTE_STREAM_ENDIAN_BIG
+#define LIBEWF_ENDIAN_LITTLE			_BYTE_STREAM_ENDIAN_LITTLE
+
+#define LIBEWF_2_TIB				0x20000000000ULL
+
+/* Define HAVE_LOCAL_LIBEWF for local use of libewf
+ */
+#if !defined( HAVE_LOCAL_LIBEWF )
+#include <libewf/definitions.h>
+
+#else
+#define LIBEWF_VERSION				20100226
+
+/* The libewf version string
+ */
+#define LIBEWF_VERSION_STRING			"20100226"
+
+/* The libewf file access
+ * bit 1	set to 1 for read access
+ * bit 2	set to 1 for write access
+ * bit 3-4	not used
+ * bit 5        set to 1 to resume write
+ * bit 6-8	not used
+ */
+#define LIBEWF_FLAG_READ			(uint8_t) 0x01
+#define LIBEWF_FLAG_WRITE			(uint8_t) 0x02
+#define LIBEWF_FLAG_RESUME			(uint8_t) 0x10
+
+/* The libewf file access macros
+ */
+#define LIBEWF_OPEN_READ			( LIBEWF_FLAG_READ )
+#define LIBEWF_OPEN_WRITE			( LIBEWF_FLAG_WRITE )
+#define LIBEWF_OPEN_WRITE_RESUME		( LIBEWF_FLAG_WRITE | LIBEWF_FLAG_RESUME )
+#define LIBEWF_OPEN_READ_WRITE			( LIBEWF_FLAG_READ | LIBEWF_FLAG_WRITE )
+
+/* The file formats
+ */
+enum LIBEWF_FORMAT
+{
+	LIBEWF_FORMAT_UNKNOWN			= 0x00,
+	LIBEWF_FORMAT_ENCASE1			= 0x01,
+	LIBEWF_FORMAT_ENCASE2			= 0x02,
+	LIBEWF_FORMAT_ENCASE3			= 0x03,
+	LIBEWF_FORMAT_ENCASE4			= 0x04,
+	LIBEWF_FORMAT_ENCASE5			= 0x05,
+	LIBEWF_FORMAT_ENCASE6			= 0x06,
+	LIBEWF_FORMAT_SMART			= 0x0E,
+	LIBEWF_FORMAT_FTK			= 0x0F,
+	LIBEWF_FORMAT_LVF			= 0x10,
+	LIBEWF_FORMAT_LINEN5			= 0x25,
+	LIBEWF_FORMAT_LINEN6			= 0x26,
+
+	/* The format as specified by Andrew Rosen
+	 */
+	LIBEWF_FORMAT_EWF			= 0x70,
+
+	/* Libewf eXtended EWF format
+	 */
+	LIBEWF_FORMAT_EWFX			= 0x71
+};
+
+/* The default segment file size
+ */
+#define LIBEWF_DEFAULT_SEGMENT_FILE_SIZE	( 1500 * 1024 * 1024 )
+
+/* The compression level definitions
+ */
+enum LIBEWF_COMPRESSION_LEVELS
+{
+	LIBEWF_COMPRESSION_NONE			= 0,
+	LIBEWF_COMPRESSION_FAST			= 1,
+	LIBEWF_COMPRESSION_BEST			= 2,
+};
+
+/* The libewf compression flags
+ * bit 1	set to 1 for emtpy block compression
+ * bit 2-8	not used
+ */
+#define LIBEWF_FLAG_COMPRESS_EMPTY_BLOCK	(uint8_t) 0x01
+
+/* The media type definitions
+ */
+enum LIBEWF_MEDIA_TYPES
+{
+	LIBEWF_MEDIA_TYPE_REMOVABLE		= 0x00,
+	LIBEWF_MEDIA_TYPE_FIXED			= 0x01,
+	LIBEWF_MEDIA_TYPE_OPTICAL		= 0x03,
+	LIBEWF_MEDIA_TYPE_MEMORY		= 0x10
+};
+
+/* The media flags definitions
+ */
+enum LIBEWF_MEDIA_FLAGS
+{
+	LIBEWF_MEDIA_FLAG_PHYSICAL		= 0x02,
+	LIBEWF_MEDIA_FLAG_FASTBLOC		= 0x04,
+	LIBEWF_MEDIA_FLAG_TABLEAU		= 0x08
+};
+
+#if defined( HAVE_V1_API )
+/* The volume type definitions
+ */
+enum LIBEWF_VOLUME_TYPES
+{
+	LIBEWF_VOLUME_TYPE_LOGICAL		= 0x00,
+	LIBEWF_VOLUME_TYPE_PHYSICAL		= 0x01
+};
+#endif
+
+/* The date representation formats
+ */
+enum LIBEWF_DATE_FORMATS
+{
+	LIBEWF_DATE_FORMAT_DAYMONTH		= 0x01,
+	LIBEWF_DATE_FORMAT_MONTHDAY		= 0x02,
+	LIBEWF_DATE_FORMAT_ISO8601		= 0x03,
+	LIBEWF_DATE_FORMAT_CTIME		= 0x04
+};
+
+/* The compression types
+ */
+#define LIBEWF_COMPRESSION_TYPE_NONE		"n"
+#define LIBEWF_COMPRESSION_TYPE_FAST		"f"
+#define LIBEWF_COMPRESSION_TYPE_BEST		"b"
+
+/* The segment file type definitions
+ */
+enum LIBEWF_SEGMENT_FILE_TYPES
+{
+	LIBEWF_SEGMENT_FILE_TYPE_DWF		= (int) 'd',
+	LIBEWF_SEGMENT_FILE_TYPE_EWF		= (int) 'E',
+	LIBEWF_SEGMENT_FILE_TYPE_LWF		= (int) 'L'
+};
+
+#endif
+
+#endif
+

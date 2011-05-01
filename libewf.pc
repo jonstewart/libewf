@@ -1,0 +1,12 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libewf
+Description: Library to support the Expert Witness Compression Format (EWF)
+Version: 20100226
+Libs: -L${libdir} -lewf
+Libs.private: -lz  
+Cflags: -I${includedir}
+
